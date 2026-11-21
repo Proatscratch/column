@@ -1,1 +1,1020 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor / Mentee Onboarding</title>
+
+    <style>
+        :root {
+            --primary-orange: #FF6B00;
+            --primary-hover: #E05E00;
+            --light-orange-bg: #FFF5EE;
+            --border-orange: #FFD8BE;
+            --text-dark: #1F2937;
+            --text-muted: #6B7280;
+            --white: #FFFFFF;
+            --error-red: #DC2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-orange-bg);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            width: 100%;
+            max-width: 620px;
+            border-radius: 16px;
+            padding: 36px;
+            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.12);
+            border: 1px solid var(--border-orange);
+            margin: 30px 0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--light-orange-bg);
+            color: var(--primary-orange);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 6px 12px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-orange);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-dark);
+        }
+
+        .optional {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 0.8rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="url"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--text-dark);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.15);
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--primary-orange);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            margin-top: 6px;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button:active {
+            transform: scale(0.99);
+        }
+
+        button:disabled {
+            background-color: #FDBA74;
+            cursor: not-allowed;
+        }
+
+        .question-box {
+            background: var(--light-orange-bg);
+            border-left: 4px solid var(--primary-orange);
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            line-height: 1.45;
+            color: var(--text-dark);
+        }
+
+        .day-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .day-btn {
+            background: var(--light-orange-bg);
+            border: 1.5px solid var(--border-orange);
+            color: var(--text-dark);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 0;
+            width: 100%;
+        }
+
+        .day-btn:hover {
+            background: #FFE8D6;
+        }
+
+        .day-btn.selected {
+            background: var(--primary-orange);
+            color: var(--white);
+            border-color: var(--primary-orange);
+        }
+
+        .status-bar {
+            margin-top: 16px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            min-height: 20px;
+        }
+
+        .status-error {
+            color: var(--error-red);
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .progress-text {
+            font-size: 0.8rem;
+            color: var(--primary-orange);
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* Rankings */
+
+        .rankings-area {
+            margin-top: 24px;
+            border-top: 1px solid var(--border-orange);
+            padding-top: 20px;
+        }
+
+        .rankings-area > button {
+            background: #374151;
+        }
+
+        .rankings-area > button:hover {
+            background: #1F2937;
+        }
+
+        .rankings-header {
+            margin: 20px 0 12px;
+        }
+
+        .rankings-header h2 {
+            font-size: 1.25rem;
+            margin-bottom: 5px;
+        }
+
+        .rankings-header p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .ranking-group {
+            border: 1px solid var(--border-orange);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 14px;
+            background: var(--light-orange-bg);
+        }
+
+        .ranking-group h3 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .ranking-meta {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+        }
+
+        .ranking-candidate {
+            background: white;
+            border: 1px solid var(--border-orange);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+        }
+
+        .ranking-candidate:last-child {
+            margin-bottom: 0;
+        }
+
+        .candidate-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .candidate-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .candidate-role {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            margin-top: 3px;
+        }
+
+        .candidate-score {
+            color: var(--primary-orange);
+            font-weight: 800;
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .score-track {
+            height: 7px;
+            background: #F3F4F6;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .score-fill {
+            height: 100%;
+            background: var(--primary-orange);
+            border-radius: 20px;
+        }
+
+        .candidate-reasoning {
+            color: var(--text-muted);
+            font-size: 0.84rem;
+            line-height: 1.45;
+            margin-top: 10px;
+        }
+
+        .rankings-message {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            padding: 12px;
+            background: var(--light-orange-bg);
+            border-radius: 8px;
+        }
+
+        @media (max-width: 500px) {
+            .card {
+                padding: 24px 18px;
+            }
+
+            .day-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+
+        <div class="header">
+            <span class="badge" id="step-badge">
+                Step 1 of 2 • Profile
+            </span>
+
+            <h1 id="card-title">Let's Get Started</h1>
+
+            <p class="subtitle" id="card-subtitle">
+                Enter your contact details before we begin.
+            </p>
+        </div>
+
+        <!-- STEP 1: CONTACT INFORMATION -->
+
+        <form id="contact-form">
+
+            <div class="form-group">
+                <label for="full-name">Full Name</label>
+                <input
+                    type="text"
+                    id="full-name"
+                    placeholder="Jane Doe"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="jane@example.com"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="(555) 123-4567"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="linkedin">
+                    LinkedIn Profile
+                    <span class="optional">(Optional)</span>
+                </label>
+
+                <input
+                    type="url"
+                    id="linkedin"
+                    placeholder="https://linkedin.com/in/janedoe"
+                >
+            </div>
+
+            <button type="submit">
+                Continue to Questions →
+            </button>
+
+        </form>
+
+        <!-- STEP 2: ONBOARDING QUESTIONS -->
+
+        <div id="interview-section" class="hidden">
+
+            <span class="progress-text" id="progress-label">
+                Getting Started
+            </span>
+
+            <div class="question-box" id="Question">
+                Do you want to be a mentor or a mentee?
+            </div>
+
+            <form id="signal-form">
+
+                <div class="form-group" id="text-input-container">
+                    <input
+                        type="text"
+                        id="signal-input"
+                        placeholder="Type mentor or mentee..."
+                        required
+                        autocomplete="off"
+                    >
+                </div>
+
+                <!-- DAY PICKER -->
+
+                <div id="day-picker-container" class="hidden">
+
+                    <div class="day-grid">
+                        <button
+                            type="button"
+                            class="day-btn"
+                            data-day="Monday"
+                        >Mon</button>
+
+                        <button
+                            type="button"
+                            class="day-btn"
+                            data-day="Tuesday"
+                        >Tue</button>
+
+                        <button
+                            type="button"
+                            class="day-btn"
+                            data-day="Wednesday"
+                        >Wed</button>
+
+                        <button
+                            type="button"
+                            class="day-btn"
+                            data-day="Thursday"
+                        >Thu</button>
+
+                        <button
+                            type="button"
+                            class="day-btn"
+                            data-day="Friday"
+                        >Fri</button>
+
+                        <button
+                            type="button"
+                            class="day-btn"
+                            data-day="Saturday"
+                        >Sat</button>
+
+                        <button
+                            type="button"
+                            class="day-btn"
+                            data-day="Sunday"
+                        >Sun</button>
+                    </div>
+
+                </div>
+
+                <button type="submit" id="submit-btn">
+                    Send Answer
+                </button>
+
+            </form>
+
+        </div>
+
+        <div class="status-bar" id="output">
+            Ready.
+        </div>
+
+        <!-- CURRENT RANKINGS BUTTON -->
+
+        <div class="rankings-area">
+
+            <button type="button" id="rankings-btn">
+                View Current Rankings
+            </button>
+
+            <div id="rankings-panel" class="hidden">
+
+                <div class="rankings-header">
+                    <h2>Current AI Rankings</h2>
+                    <p>
+                        Candidates ranked by the AI for each individual.
+                    </p>
+                </div>
+
+                <div id="rankings-content">
+                    <p class="rankings-message">
+                        Click the button to load rankings.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // =============================================
+        // ELEMENTS
+        // =============================================
+
+        const contactForm = document.getElementById('contact-form');
+        const interviewSection = document.getElementById('interview-section');
+        const signalForm = document.getElementById('signal-form');
+
+        const input = document.getElementById('signal-input');
+        const textInputContainer = document.getElementById('text-input-container');
+        const dayPickerContainer = document.getElementById('day-picker-container');
+
+        const dayButtons = document.querySelectorAll('.day-btn');
+
+        const submitBtn = document.getElementById('submit-btn');
+        const output = document.getElementById('output');
+        const questionEl = document.getElementById('Question');
+
+        const stepBadge = document.getElementById('step-badge');
+        const cardTitle = document.getElementById('card-title');
+        const cardSubtitle = document.getElementById('card-subtitle');
+        const progressLabel = document.getElementById('progress-label');
+
+        const rankingsButton = document.getElementById('rankings-btn');
+        const rankingsPanel = document.getElementById('rankings-panel');
+        const rankingsContent = document.getElementById('rankings-content');
+
+        // =============================================
+        // QUESTIONS
+        // =============================================
+
+        const questionSets = {
+            mentor: [
+                "What field do you work in?",
+                "What skills are you most excited to teach?",
+                "If you have taught before, what is your teaching style?",
+                "Write three words to describe you.",
+                "What days of the week are you available?",
+                "What skill level are you most comfortable teaching?"
+            ],
+
+            mentee: [
+                "What do you want to learn through us?",
+                "What do you hope to achieve?",
+                "What is your biggest career goal right now?",
+                "What personality of mentors would you like?",
+                "What days of the week are you available?",
+                "How do you best learn?"
+            ]
+        };
+
+        // =============================================
+        // STATE
+        // =============================================
+
+        let responses = {};
+        let selectedSet = null;
+        let questionIndex = 0;
+        let followUpCount = 0;
+        let selectedDays = [];
+
+        // =============================================
+        // GENERAL FUNCTIONS
+        // =============================================
+
+        function setStatus(message, isError = false) {
+            output.textContent = message;
+
+            if (isError) {
+                output.classList.add('status-error');
+            } else {
+                output.classList.remove('status-error');
+            }
+        }
+
+        function escapeHTML(value) {
+            return String(value ?? '').replace(/[&<>"']/g, char => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            })[char]);
+        }
+
+        // =============================================
+        // DAY SELECTION
+        // =============================================
+
+        dayButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('selected');
+
+                const day = btn.getAttribute('data-day');
+
+                if (selectedDays.includes(day)) {
+                    selectedDays = selectedDays.filter(
+                        selected => selected !== day
+                    );
+                } else {
+                    selectedDays.push(day);
+                }
+            });
+        });
+
+        // =============================================
+        // QUESTION UI
+        // =============================================
+
+        function checkQuestionUI() {
+            const currentQ = questionEl.textContent.toLowerCase();
+
+            if (currentQ.includes('days of the week')) {
+                textInputContainer.classList.add('hidden');
+                input.removeAttribute('required');
+                dayPickerContainer.classList.remove('hidden');
+            } else {
+                textInputContainer.classList.remove('hidden');
+                input.setAttribute('required', 'true');
+                dayPickerContainer.classList.add('hidden');
+            }
+        }
+
+        // =============================================
+        // CONTACT FORM
+        // =============================================
+
+        contactForm.addEventListener('submit', event => {
+            event.preventDefault();
+
+            responses['Full Name'] =
+                document.getElementById('full-name').value.trim();
+
+            responses['Email'] =
+                document.getElementById('email').value.trim();
+
+            responses['Phone'] =
+                document.getElementById('phone').value.trim();
+
+            responses['LinkedIn'] =
+                document.getElementById('linkedin').value.trim() ||
+                'Not provided';
+
+            contactForm.classList.add('hidden');
+            interviewSection.classList.remove('hidden');
+
+            stepBadge.textContent = 'Step 2 of 2 • Onboarding';
+
+            cardTitle.textContent =
+                `Welcome, ${responses['Full Name'].split(' ')[0]}!`;
+
+            cardSubtitle.textContent =
+                'Answer the prompts below so we can match you.';
+
+            setStatus('Ready.');
+            input.focus();
+        });
+
+        // =============================================
+        // ONBOARDING FORM
+        // =============================================
+
+        signalForm.addEventListener('submit', async event => {
+            event.preventDefault();
+
+            let payload = '';
+            const currentQuestion = questionEl.textContent;
+
+            if (currentQuestion.toLowerCase().includes('days of the week')) {
+                if (selectedDays.length === 0) {
+                    setStatus('Please select at least one day.', true);
+                    return;
+                }
+
+                payload = selectedDays.join(', ');
+                selectedDays = [];
+
+                dayButtons.forEach(button => {
+                    button.classList.remove('selected');
+                });
+
+            } else {
+                payload = input.value.trim();
+                input.value = '';
+            }
+
+            // Select mentor or mentee track.
+
+            if (!selectedSet) {
+                const choice = payload.toLowerCase();
+
+                if (choice.includes('mentor')) {
+                    selectedSet = questionSets.mentor;
+                    responses['Role'] = 'Mentor';
+
+                } else if (choice.includes('mentee')) {
+                    selectedSet = questionSets.mentee;
+                    responses['Role'] = 'Mentee';
+
+                } else {
+                    setStatus(
+                        'Please type either "mentor" or "mentee".',
+                        true
+                    );
+                    return;
+                }
+
+                stepBadge.textContent = `${responses['Role']} Track`;
+
+                progressLabel.textContent =
+                    `Question 1 of ${selectedSet.length}`;
+
+                questionEl.textContent = selectedSet[questionIndex];
+                input.placeholder = 'Enter your answer...';
+
+                checkQuestionUI();
+                setStatus('Ready.');
+
+                return;
+            }
+
+            responses[currentQuestion] = payload;
+
+            setStatus('Thinking...');
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch(window.location.pathname, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        signal: payload,
+                        ogq: currentQuestion,
+                        mainQuestion: selectedSet[questionIndex],
+                        followUpCount,
+                        responses,
+                        remainingQuestions: selectedSet.slice(
+                            questionIndex + 1
+                        )
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.error || 'Unable to process your answer.'
+                    );
+                }
+
+                // Prevent accidental question leakage.
+
+                let isActuallyNext = data.moveNext;
+
+                if (
+                    data.followUp &&
+                    selectedSet.includes(data.followUp)
+                ) {
+                    isActuallyNext = true;
+                }
+
+                if (isActuallyNext) {
+                    followUpCount = 0;
+                    questionIndex++;
+
+                    if (questionIndex < selectedSet.length) {
+                        progressLabel.textContent =
+                            `Question ${questionIndex + 1} of ${selectedSet.length}`;
+
+                        questionEl.textContent =
+                            selectedSet[questionIndex];
+
+                        checkQuestionUI();
+                        setStatus('Ready.');
+
+                    } else {
+                        setStatus('Saving your profile to database...');
+
+                        const saveRes = await fetch(
+                            window.location.pathname,
+                            {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    isComplete: true,
+                                    responses
+                                })
+                            }
+                        );
+
+                        const saveData = await saveRes.json();
+
+                        if (!saveRes.ok || !saveData.saved) {
+                            throw new Error(
+                                saveData.error ||
+                                'Failed to save to database.'
+                            );
+                        }
+
+                        progressLabel.textContent = 'Completed';
+                        cardTitle.textContent = 'Profile Complete!';
+
+                        cardSubtitle.textContent =
+                            'We have securely saved your responses.';
+
+                        questionEl.textContent =
+                            `Thank you, ${responses['Full Name']}! We will reach out to you at ${responses['Email']} soon.`;
+
+                        signalForm.classList.add('hidden');
+
+                        setStatus('Saved to database!');
+                    }
+
+                } else {
+                    followUpCount++;
+
+                    progressLabel.textContent =
+                        `Question ${questionIndex + 1} of ${selectedSet.length} • Quick note`;
+
+                    questionEl.textContent = data.followUp;
+
+                    checkQuestionUI();
+                    setStatus('Ready.');
+                }
+
+            } catch (error) {
+                setStatus(`Error: ${error.message}`, true);
+
+            } finally {
+                submitBtn.disabled = false;
+
+                if (
+                    !questionEl.textContent.toLowerCase().includes(
+                        'days of the week'
+                    )
+                ) {
+                    input.focus();
+                }
+            }
+        });
+
+        // =============================================
+        // CURRENT RANKINGS VIEWER
+        // =============================================
+
+        let rankingsLoaded = false;
+
+        rankingsButton.addEventListener('click', async () => {
+            const isVisible =
+                !rankingsPanel.classList.contains('hidden');
+
+            if (isVisible) {
+                rankingsPanel.classList.add('hidden');
+                rankingsButton.textContent = 'View Current Rankings';
+                return;
+            }
+
+            rankingsPanel.classList.remove('hidden');
+            rankingsButton.disabled = true;
+            rankingsButton.textContent = 'Loading Rankings...';
+
+            rankingsContent.innerHTML = `
+                <p class="rankings-message">
+                    Loading current AI rankings...
+                </p>
+            `;
+
+            try {
+                const response = await fetch('/api/rankings');
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(
+                        data.error || 'Could not load rankings.'
+                    );
+                }
+
+                rankingsContent.innerHTML = '';
+                rankingsLoaded = true;
+
+                if (!data.rankings || data.rankings.length === 0) {
+                    rankingsContent.innerHTML = `
+                        <p class="rankings-message">
+                            No rankings are available yet.
+                            Candidates need to complete onboarding
+                            before they can be evaluated.
+                        </p>
+                    `;
+
+                    return;
+                }
+
+                for (const group of data.rankings) {
+                    const section = document.createElement('section');
+                    section.className = 'ranking-group';
+
+                    const heading = document.createElement('h3');
+
+                    heading.textContent =
+                        `${group.evaluator} (${group.role})`;
+
+                    const meta = document.createElement('div');
+                    meta.className = 'ranking-meta';
+
+                    meta.textContent =
+                        `${group.candidates.length} candidates ranked` +
+                        (group.updatedAt
+                            ? ` • Updated ${group.updatedAt}`
+                            : '');
+
+                    section.appendChild(heading);
+                    section.appendChild(meta);
+
+                    if (!group.candidates.length) {
+                        const empty = document.createElement('p');
+                        empty.className = 'rankings-message';
+                        empty.textContent = 'No candidates in this ranking.';
+                        section.appendChild(empty);
+                    }
+
+                    group.candidates.forEach((candidate, index) => {
+                        const item = document.createElement('div');
+                        item.className = 'ranking-candidate';
+
+                        const headingRow = document.createElement('div');
+                        headingRow.className = 'candidate-heading';
+
+                        const nameContainer = document.createElement('div');
+
+                        const name = document.createElement('div');
+                        name.className = 'candidate-name';
+                        name.textContent =
+                            `#${index + 1} ${candidate.name}`;
+
+                        const role = document.createElement('div');
+                        role.className = 'candidate-role';
+                        role.textContent = candidate.role;
+
+                        nameContainer.appendChild(name);
+                        nameContainer.appendChild(role);
+
+                        const score = document.createElement('div');
+                        score.className = 'candidate-score';
+                        score.textContent = `${candidate.score}/100`;
+
+                        headingRow.appendChild(nameContainer);
+                        headingRow.appendChild(score);
+
+                        const track = document.createElement('div');
+                        track.className = 'score-track';
+
+                        const fill = document.createElement('div');
+                        fill.className = 'score-fill';
+                        fill.style.width =
+                            `${Math.max(0, Math.min(100, candidate.score))}%`;
+
+                        track.appendChild(fill);
+
+                        const reasoning = document.createElement('p');
+                        reasoning.className = 'candidate-reasoning';
+                        reasoning.textContent =
+                            candidate.reasoning || 'No explanation provided.';
+
+                        item.appendChild(headingRow);
+                        item.appendChild(track);
+                        item.appendChild(reasoning);
+
+                        section.appendChild(item);
+                    });
+
+                    rankingsContent.appendChild(section);
+                }
+
+            } catch (error) {
+                rankingsContent.innerHTML = '';
+
+                const message = document.createElement('p');
+                message.className = 'rankings-message';
+                message.textContent = `Error: ${error.message}`;
+
+                rankingsContent.appendChild(message);
+
+            } finally {
+                rankingsButton.disabled = false;
+                rankingsButton.textContent = 'Hide Rankings';
+            }
+        });
+    </script>
+
+</body>
+</html>
+
